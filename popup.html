@@ -15,7 +15,7 @@
       font-family: "Red Hat Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #FFFFFF;
       color: #3A322B;
-      padding: 20px;
+      padding: 20px 20px 30px;
     }
 
     h1 {
@@ -140,10 +140,27 @@
       width: 16px;
       height: 16px;
       position: relative;
-      top: 1px;
+      top: 0px;
       left: 1px;
     }
 
+    .footer {
+      position: fixed;
+      bottom: 7px;
+      left: 8px;
+      padding-top: 20px;
+      font-size: 10px;
+      color: #b0a99f;
+    }
+
+    .footer a {
+      color: #b0a99f;
+      text-decoration: underline;
+    }
+
+    .footer a:hover {
+      color: #b0a99f;
+    }
   </style>
 </head>
 <body>
@@ -153,6 +170,7 @@
     <input type="text" id="birthdate" placeholder="e.g. Mar 28, 1986, 3/28/86">
   </div>
   <div id="result"></div>
+  <div class="footer">Made for <a href="https://advocatesforchildren.org/donate/" target="_blank">AFC</a> &lt;3</div>
   <script src="popup.js"></script>
 </body>
 </html>
