@@ -1,4 +1,5 @@
 import * as chrono from "chrono-node";
+import confetti from "canvas-confetti";
 
 const birthdate = document.getElementById("birthdate");
 const result = document.getElementById("result");
@@ -10,6 +11,8 @@ const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 
 const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 let currentAge = null;
+let confettiTimeout = null;
+let confettiFired = false;
 
 function hasYear(str) {
   const parsed = chrono.parse(str);
@@ -56,6 +59,11 @@ birthdate.addEventListener("input", () => {
     currentAge = null;
     result.textContent = "";
     result.className = "";
+    if (confettiTimeout) {
+      clearTimeout(confettiTimeout);
+      confettiTimeout = null;
+    }
+    confettiFired = false;
   }
 });
 
@@ -138,5 +146,26 @@ function showAge(date) {
   document.getElementById("copy-number").addEventListener("click", () => copyWithFeedback("number"));
   if (hasWord) {
     document.getElementById("copy-word").addEventListener("click", () => copyWithFeedback("word"));
+  }
+
+  // Confetti on birthday
+  if (month === tm && day === td) {
+    if (!confettiFired) {
+      if (confettiTimeout) clearTimeout(confettiTimeout);
+      confettiTimeout = setTimeout(() => {
+        confettiFired = true;
+        confetti({
+          particleCount: 80,
+          spread: 90,
+          origin: { x: 0.0, y: 1 },
+          angle: 30,
+          startVelocity: 11,
+          gravity: 0.5,
+          ticks: 400,
+          decay: 0.95,
+          colors: ["#FA7A55", "#67BAE8", "#5BC4BD", "#A6CE39", "#B0ABD5", "#FDB929"],
+        });
+      }, 500);
+    }
   }
 }
