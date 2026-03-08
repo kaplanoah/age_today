@@ -22,7 +22,7 @@ function hasYear(str) {
 
 function isPast(date) {
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setHours(23, 59, 59, 999);
   return date <= today;
 }
 
