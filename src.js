@@ -3,6 +3,18 @@ import * as chrono from "chrono-node";
 const birthdate = document.getElementById("birthdate");
 const result = document.getElementById("result");
 
+function hasYear(str) {
+  const parsed = chrono.parse(str);
+  if (!parsed.length) return false;
+  return parsed[0].start.isCertain("year");
+}
+
+function isPast(date) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date <= today;
+}
+
 birthdate.addEventListener("input", () => {
   const val = birthdate.value.trim();
   if (!val) {
@@ -12,7 +24,7 @@ birthdate.addEventListener("input", () => {
   }
 
   const parsed = chrono.parseDate(val);
-  if (parsed) {
+  if (parsed && hasYear(val) && isPast(parsed)) {
     showAge(parsed);
   } else {
     result.textContent = "";
@@ -27,11 +39,14 @@ birthdate.addEventListener("keydown", (e) => {
   if (!val) return;
 
   const parsed = chrono.parseDate(val);
-  if (parsed) {
-    showAge(parsed);
-  } else {
-    result.textContent = "Couldn't recognize that date. Try something like \"March 5 1990\" or \"3/5/1990\".";
+  if (!parsed || !hasYear(val)) {
+    result.textContent = "Please include a year, e.g. \"Mar 6 1990\" or \"3/6/90\".";
     result.className = "error";
+  } else if (!isPast(parsed)) {
+    result.textContent = "That date is in the future!";
+    result.className = "error";
+  } else {
+    showAge(parsed);
   }
 });
 
@@ -51,9 +66,5 @@ function showAge(date) {
   }
 
   result.className = "";
-  if (age < 0) {
-    result.innerHTML = "That date is in the future!";
-  } else {
-    result.innerHTML = `<span class="age">${age}</span> years old`;
-  }
+  result.innerHTML = `<span class="age">${age}</span> years old`;
 }

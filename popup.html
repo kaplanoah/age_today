@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700&display=swap">
   <style>
     * {
       margin: 0;
@@ -11,39 +12,50 @@
 
     body {
       width: 280px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f8f9fa;
-      color: #1a1a2e;
+      font-family: "Red Hat Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #FFFFFF;
+      color: #3A322B;
       padding: 20px;
     }
 
     h1 {
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 600;
       margin-bottom: 16px;
       text-align: center;
     }
 
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     label {
-      display: block;
       font-size: 13px;
       font-weight: 500;
-      margin-bottom: 6px;
-      color: #555;
+      color: #3A322B;
+      white-space: nowrap;
     }
 
     input[type="text"] {
-      width: 100%;
+      flex: 1;
       padding: 8px 10px;
       font-size: 14px;
-      border: 1px solid #ccc;
+      border: 1px solid #FEC654;
       border-radius: 6px;
       outline: none;
+      background: #FFFFFF;
+      color: #3A322B;
       transition: border-color 0.2s;
     }
 
     input[type="text"]:focus {
-      border-color: #4a6cf7;
+      border-color: #F69577;
+    }
+
+    input[type="text"]::placeholder {
+      color: #b0a99f;
     }
 
     #result {
@@ -51,18 +63,18 @@
       text-align: center;
       font-size: 15px;
       min-height: 22px;
-      color: #333;
+      color: #3A322B;
     }
 
     #result.error {
-      color: #c0392b;
+      color: #F69577;
       font-size: 13px;
     }
 
     #result .age {
       font-size: 32px;
       font-weight: 700;
-      color: #4a6cf7;
+      color: #FEC654;
       display: block;
       margin-top: 4px;
     }
@@ -70,8 +82,10 @@
 </head>
 <body>
   <h1>Age Today</h1>
-  <label for="birthdate">Birth date</label>
-  <input type="text" id="birthdate" placeholder="e.g. March 5 1990, 3/5/1990">
+  <div class="input-row">
+    <label for="birthdate">DOB</label>
+    <input type="text" id="birthdate" placeholder="e.g. Mar 6 1990, 3/6/90">
+  </div>
   <div id="result"></div>
   <script src="popup.js"></script>
 </body>
