@@ -2,6 +2,14 @@ import * as chrono from "chrono-node";
 
 const birthdate = document.getElementById("birthdate");
 const result = document.getElementById("result");
+const isMac = navigator.platform.toUpperCase().includes("MAC");
+const modKey = isMac ? "\u2318" : "Ctrl+";
+const shiftMod = isMac ? "\u21e7" : "Shift+";
+const copyIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+let currentAge = null;
 
 function hasYear(str) {
   const parsed = chrono.parse(str);
@@ -14,6 +22,8 @@ function isPast(date) {
   today.setHours(0, 0, 0, 0);
   return date <= today;
 }
+
+birthdate.focus();
 
 // Auto-fill from page selection when popup opens
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -33,6 +43,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 birthdate.addEventListener("input", () => {
   const val = birthdate.value.trim();
   if (!val) {
+    currentAge = null;
     result.textContent = "";
     result.className = "";
     return;
@@ -42,6 +53,7 @@ birthdate.addEventListener("input", () => {
   if (parsed && hasYear(val) && isPast(parsed)) {
     showAge(parsed);
   } else {
+    currentAge = null;
     result.textContent = "";
     result.className = "";
   }
@@ -65,6 +77,32 @@ birthdate.addEventListener("keydown", (e) => {
   }
 });
 
+document.addEventListener("keydown", (e) => {
+  if (currentAge === null) return;
+  const mod = e.metaKey || e.ctrlKey;
+  if (!mod || e.key.toLowerCase() !== "c") return;
+
+  e.preventDefault();
+  if (e.shiftKey && currentAge >= 0 && currentAge <= 9) {
+    copyWithFeedback("word");
+  } else {
+    copyWithFeedback("number");
+  }
+});
+
+function copyWithFeedback(type) {
+  const text = type === "word" ? WORDS[currentAge] : String(currentAge);
+  navigator.clipboard.writeText(text);
+
+  const btn = document.getElementById("copy-" + type);
+  if (btn) {
+    const icon = btn.querySelector("svg");
+    const orig = icon.outerHTML;
+    icon.outerHTML = checkIcon;
+    setTimeout(() => { btn.querySelector("svg").outerHTML = orig; }, 800);
+  }
+}
+
 function showAge(date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -80,6 +118,25 @@ function showAge(date) {
     age--;
   }
 
+  currentAge = age;
   result.className = "";
-  result.innerHTML = `<span class="age">${age}</span>`;
+
+  const hasWord = age >= 0 && age <= 9;
+  let html = `<div class="age-row">
+    <span class="age">${age}</span>
+    <button class="copy-btn" id="copy-number" type="button">${copyIcon} ${modKey}C</button>
+  </div>`;
+  if (hasWord) {
+    html += `<div class="age-row word-row">
+      <span class="age">${WORDS[age]}</span>
+      <button class="copy-btn" id="copy-word" type="button">${copyIcon} ${shiftMod}${modKey}C</button>
+    </div>`;
+  }
+
+  result.innerHTML = html;
+
+  document.getElementById("copy-number").addEventListener("click", () => copyWithFeedback("number"));
+  if (hasWord) {
+    document.getElementById("copy-word").addEventListener("click", () => copyWithFeedback("word"));
+  }
 }

@@ -29,6 +29,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      padding-bottom: 4px;
     }
 
     label {
@@ -51,7 +52,7 @@
     }
 
     input[type="text"]:focus {
-      border-color: #F69577;
+      border-color: #FEC654;
     }
 
     input[type="text"]::placeholder {
@@ -59,25 +60,90 @@
     }
 
     #result {
-      margin-top: 16px;
-      text-align: center;
-      font-size: 15px;
-      min-height: 22px;
       color: #3A322B;
+    }
+
+    #result:empty {
+      display: none;
     }
 
     #result.error {
+      margin-top: 16px;
+      text-align: center;
       color: #F69577;
       font-size: 13px;
+      font-weight: 500;
     }
 
-    #result .age {
+    .age-row {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .age-row .age {
       font-size: 32px;
       font-weight: 700;
       color: #3A322B;
-      display: block;
+      width: 100%;
+      text-align: center;
+      padding-right: 20px;
+    }
+
+    .age-row.word-row {
       margin-top: 4px;
     }
+
+    .age-row.word-row .age {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .age-row.word-row .copy-btn {
+      font-size: 11px;
+      gap: 7px;
+    }
+
+    .age-row.word-row .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      left: 2px;
+      top: 0px;
+    }
+
+    .copy-btn {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 7px 6px 5px;
+      border: none;
+      border-radius: 5px;
+      background: #9FE0DD;
+      color: #3A322B;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: absolute;
+      right: 0;
+      opacity: 0.7;
+      width: 62px;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
+
+    .copy-btn svg {
+      width: 16px;
+      height: 16px;
+      position: relative;
+      top: 1px;
+      left: 1px;
+    }
+
   </style>
 </head>
 <body>
