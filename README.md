@@ -9,8 +9,6 @@ A Chrome extension that calculates someone's current age from a birth date.
 - **Copy shortcuts** — click the copy button or use keyboard shortcuts to copy the age
   - `Cmd+C` / `Ctrl+C` — copy as number
   - `Shift+Cmd+C` / `Shift+Ctrl+C` — copy as word (ages 0-9)
-- **Birthday confetti** — if the birth date's month and day match today
-
 ## Development
 
 ```
