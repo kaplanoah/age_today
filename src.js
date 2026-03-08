@@ -15,6 +15,21 @@ function isPast(date) {
   return date <= today;
 }
 
+// Auto-fill from page selection when popup opens
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  if (!tabs[0]?.id) return;
+  chrome.scripting.executeScript({
+    target: { tabId: tabs[0].id },
+    func: () => window.getSelection().toString(),
+  }, (results) => {
+    const selection = results?.[0]?.result?.trim();
+    if (selection) {
+      birthdate.value = selection;
+      birthdate.dispatchEvent(new Event("input"));
+    }
+  });
+});
+
 birthdate.addEventListener("input", () => {
   const val = birthdate.value.trim();
   if (!val) {
@@ -66,5 +81,5 @@ function showAge(date) {
   }
 
   result.className = "";
-  result.innerHTML = `<span class="age">${age}</span> years old`;
+  result.innerHTML = `<span class="age">${age}</span>`;
 }
