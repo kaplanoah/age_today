@@ -1,0 +1,24 @@
+{
+  "name": "age_today",
+  "version": "1.0.0",
+  "description": "",
+  "main": "popup.js",
+  "scripts": {
+    "build": "esbuild src.js --bundle --outfile=popup.js --format=iife"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaplanoah/age_today.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaplanoah/age_today/issues"
+  },
+  "homepage": "https://github.com/kaplanoah/age_today#readme",
+  "dependencies": {
+    "chrono-node": "^2.9.0",
+    "esbuild": "^0.27.3"
+  }
+}
