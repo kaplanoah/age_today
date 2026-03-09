@@ -28,7 +28,7 @@
     .input-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding-bottom: 4px;
     }
 
@@ -75,47 +75,48 @@
       font-weight: 500;
     }
 
-    .age-row {
-      margin-top: 8px;
-      display: flex;
+    .age-rows {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: center;
       align-items: center;
-      position: relative;
+      row-gap: 8px;
+      column-gap: 13px;
+      padding-left: 30px;
     }
 
-    .age-row .age {
+    .age-rows .age {
       font-size: 32px;
       font-weight: 700;
       color: #3A322B;
-      width: 100%;
       text-align: center;
-      padding-right: 20px;
     }
 
-    .age-row.word-row {
-      margin-top: 4px;
-    }
-
-    .age-row.word-row .age {
-      font-size: 18px;
+    .age-rows .age.word {
+      font-size: 16px;
       font-weight: 600;
     }
 
-    .age-row.word-row .copy-btn {
-      font-size: 11px;
-      gap: 7px;
+    .age-rows .copy-btn {
+      justify-self: start;
     }
 
-    .age-row.word-row .copy-btn svg {
-      width: 14px;
-      height: 14px;
-      left: 2px;
-      top: 0px;
+    .copy-btn.small {
+      font-size: 10px;
+      padding: 5px 6px 3px 4px;
+      gap: 5px;
+    }
+
+    .copy-btn.small svg {
+      width: 12px;
+      height: 12px;
     }
 
     .copy-btn {
       font-family: inherit;
-      font-size: 13px;
-      padding: 7px 6px 5px;
+      font-size: 12px;
+      padding: 5px 6px 4px 5px;
       border: none;
       border-radius: 5px;
       background: #9FE0DD;
@@ -125,11 +126,12 @@
       transition: opacity 0.15s;
       display: flex;
       align-items: center;
-      gap: 8px;
-      position: absolute;
-      right: 0;
+      gap: 7px;
       opacity: 0.7;
-      width: 62px;
+    }
+
+    .copy-btn .shortcut {
+      opacity: 0.8;
     }
 
     .copy-btn:hover {

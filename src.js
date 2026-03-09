@@ -35,6 +35,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     target: { tabId: tabs[0].id },
     func: () => window.getSelection().toString(),
   }, (results) => {
+    if (chrome.runtime.lastError) return;
     const selection = results?.[0]?.result?.trim();
     if (selection) {
       birthdate.value = selection;
@@ -130,16 +131,14 @@ function showAge(date) {
   result.className = "";
 
   const hasWord = age >= 0 && age <= 9;
-  let html = `<div class="age-row">
+  let html = `<div class="age-rows">
     <span class="age">${age}</span>
-    <button class="copy-btn" id="copy-number" type="button">${copyIcon} ${modKey}C</button>
-  </div>`;
+    <button class="copy-btn" id="copy-number" type="button">${copyIcon}<span class="shortcut">${modKey}C</span></button>`;
   if (hasWord) {
-    html += `<div class="age-row word-row">
-      <span class="age">${WORDS[age]}</span>
-      <button class="copy-btn" id="copy-word" type="button">${copyIcon} ${shiftMod}${modKey}C</button>
-    </div>`;
+    html += `<span class="age word">${WORDS[age]}</span>
+      <button class="copy-btn small" id="copy-word" type="button">${copyIcon}<span class="shortcut">${shiftMod}${modKey}C</span></button>`;
   }
+  html += `</div>`;
 
   result.innerHTML = html;
 
