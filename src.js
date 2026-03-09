@@ -38,8 +38,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (chrome.runtime.lastError) return;
     const selection = results?.[0]?.result?.trim();
     if (selection) {
-      birthdate.value = selection;
-      birthdate.dispatchEvent(new Event("input"));
+      const parsed = chrono.parseDate(selection);
+      if (parsed && hasYear(selection) && isPast(parsed)) {
+        birthdate.value = selection;
+        birthdate.dispatchEvent(new Event("input"));
+      }
     }
   });
 });
