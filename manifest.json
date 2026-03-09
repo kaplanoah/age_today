@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Age Today",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Enter a date of birth and instantly see the current age",
   "action": {
     "default_popup": "popup.html",
