@@ -11,6 +11,63 @@ const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 
 const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 let currentAge = null;
+
+const EVENTS = {
+  "2008-05-02": { emoji: "🎬", text: "Iron Man launched the MCU" },
+  "2008-07-18": { emoji: "🎬", text: "The Dark Knight opening day" },
+  "2009-12-18": { emoji: "🎬", text: "Avatar opening day" },
+  "2010-06-18": { emoji: "🎬", text: "Toy Story 3 opening day" },
+  "2012-05-04": { emoji: "🎬", text: "The Avengers opening day" },
+  "2013-11-27": { emoji: "🎬", text: "Frozen opening day" },
+  "2015-06-19": { emoji: "🎬", text: "Inside Out opening day" },
+  "2015-12-18": { emoji: "🎬", text: "Star Wars: The Force Awakens opening day" },
+  "2016-11-23": { emoji: "🎬", text: "Moana opening day" },
+  "2017-11-22": { emoji: "🎬", text: "Coco opening day" },
+  "2018-02-16": { emoji: "🎬", text: "Black Panther opening day" },
+  "2018-04-27": { emoji: "🎬", text: "Avengers: Infinity War opening day" },
+  "2018-06-15": { emoji: "🎬", text: "Incredibles 2 opening day" },
+  "2018-12-14": { emoji: "🎬", text: "Spider-Man: Into the Spider-Verse opening day" },
+  "2019-04-26": { emoji: "🎬", text: "Avengers: Endgame opening day" },
+  "2021-11-24": { emoji: "🎬", text: "Encanto opening day" },
+  "2022-11-11": { emoji: "🎬", text: "Black Panther: Wakanda Forever opening day" },
+  "2023-06-02": { emoji: "🎬", text: "Spider-Man: Across the Spider-Verse opening day" },
+  "2023-07-21": { emoji: "🎬", text: "Barbenheimer" },
+  "2011-11-18": { emoji: "🕹️", text: "Minecraft launched version 1.0" },
+  "2013-09-17": { emoji: "🕹️", text: "GTA V launched" },
+  "2016-07-06": { emoji: "🕹️", text: "Pokémon GO launched" },
+  "2017-03-03": { emoji: "🕹️", text: "The Nintendo Switch launched" },
+  "2022-02-25": { emoji: "🕹️", text: "Elden Ring launched" },
+  "2025-06-05": { emoji: "🕹️", text: "Nintendo Switch 2 launched" },
+  "2012-08-06": { emoji: "🔭", text: "Curiosity rover landed on Mars" },
+  "2012-08-25": { emoji: "🔭", text: "Voyager 1 became the first human-made object to reach interstellar space" },
+  "2014-11-12": { emoji: "🔭", text: "Rosetta's Philae probe landed on a comet for the first time" },
+  "2021-02-18": { emoji: "🔭", text: "Perseverance rover landed on Mars" },
+  "2021-04-19": { emoji: "🔭", text: "Ingenuity made the first powered flight on another planet" },
+  "2021-12-25": { emoji: "🔭", text: "The James Webb Space Telescope launched" },
+  "2007-06-29": { emoji: "📱", text: "The iPhone launched" },
+  "2010-10-06": { emoji: "📱", text: "Instagram launched" },
+  "2015-03-15": { emoji: "🎵", text: "Kendrick Lamar released To Pimp a Butterfly" },
+  "2016-04-23": { emoji: "🍋", text: "Beyoncé dropped Lemonade" },
+  "2017-04-14": { emoji: "🎵", text: "Kendrick Lamar dropped DAMN." },
+  "2020-07-24": { emoji: "🎵", text: "Taylor Swift dropped folklore" },
+  "2022-07-29": { emoji: "🎵", text: "Beyoncé dropped Renaissance" },
+  "2022-10-21": { emoji: "🎵", text: "Taylor Swift released Midnights" },
+  "2013-09-29": { emoji: "📺", text: "Breaking Bad series finale" },
+  "2016-07-15": { emoji: "📺", text: "Stranger Things Season 1 premiered" },
+  "2019-05-19": { emoji: "📺", text: "Game of Thrones series finale" },
+  "2021-09-17": { emoji: "📺", text: "Squid Game dropped on Netflix" },
+  "2022-06-23": { emoji: "📺", text: "The Bear premiered" },
+  "2023-01-15": { emoji: "📺", text: "The Last of Us premiered" },
+  "2023-05-28": { emoji: "📺", text: "Succession series finale" },
+  "2014-09-04": { emoji: "🗽", text: "NYC launched Pre-K for All" },
+  "2015-12-10": { emoji: "📚", text: "President Obama signed the Every Student Succeeds Act, replacing No Child Left Behind" },
+  "2017-03-22": { emoji: "⚖️", text: "The Supreme Court unanimously ruled in Endrew F. v. Douglas County that schools must offer IEPs \"reasonably calculated to enable a child to make progress appropriate in light of the child's circumstances\"" },
+  "2018-08-28": { emoji: "⚖️", text: "A federal judge denied NYC DOE's motion to dismiss AFC's lawsuit on behalf of students denied nursing services" },
+  "2019-02-15": { emoji: "⚖️", text: "New York State ruled in AFC's favor against Success Academy Charter Schools, finding they had illegally changed the placements of students with disabilities" },
+  "2020-05-19": { emoji: "⚖️", text: "AFC secured a resolution agreement requiring NYC DOE to provide translation and interpretation services in special education proceedings" },
+  "2022-09-08": { emoji: "🗽", text: "Governor Hochul signed New York City's landmark class size law, the first binding class size mandate in city history" },
+  "2023-02-03": { emoji: "⚖️", text: "The Second Circuit reversed a lower court and allowed AFC's Z.Q. class action to proceed, ruling that NYC students with disabilities could pursue claims for make-up services lost during COVID remote learning" },
+};
 let confettiTimeout = null;
 let confettiFired = false;
 
@@ -142,6 +199,12 @@ function showAge(date) {
       <button class="copy-btn small" id="copy-word" type="button">${copyIcon}<span class="shortcut">${shiftMod}${modKey}C</span></button>`;
   }
   html += `</div>`;
+
+  const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  const event = EVENTS[dateKey];
+  if (event) {
+    html += `<div class="fun-fact"><span class="emoji">${event.emoji}</span> ${event.text}</div>`;
+  }
 
   result.innerHTML = html;
 
