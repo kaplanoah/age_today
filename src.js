@@ -203,7 +203,8 @@ function showAge(date) {
   const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   const event = EVENTS[dateKey];
   if (event) {
-    html += `<div class="fun-fact"><span class="emoji">${event.emoji}</span> ${event.text}</div>`;
+    const eventDate = new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    html += `<div class="fun-fact"><span class="emoji">${event.emoji}</span> ${event.text}<div class="fun-fact-date">${eventDate}</div></div>`;
   }
 
   result.innerHTML = html;
