@@ -204,7 +204,7 @@ function showAge(date) {
   const event = EVENTS[dateKey];
   if (event) {
     const eventDate = new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-    html += `<div class="fun-fact"><span class="emoji">${event.emoji}</span> ${event.text}<div class="fun-fact-date">${eventDate}</div></div>`;
+    html += `<div class="on-this-date"><span class="emoji">${event.emoji}</span> ${event.text}<div class="on-this-date-date">${eventDate}</div></div>`;
   }
 
   result.innerHTML = html;
