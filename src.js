@@ -115,7 +115,7 @@ birthdate.addEventListener("input", () => {
 
   const parsed = chrono.parseDate(val);
   if (parsed && hasYear(val) && isPast(parsed)) {
-    showAge(parsed);
+    showAge(parsed, val);
   } else {
     currentAge = null;
     result.textContent = "";
@@ -142,7 +142,7 @@ birthdate.addEventListener("keydown", (e) => {
     result.textContent = "That date is in the future!";
     result.className = "error";
   } else {
-    showAge(parsed);
+    showAge(parsed, val);
   }
 });
 
@@ -172,7 +172,7 @@ function copyWithFeedback(type) {
   }
 }
 
-function showAge(date) {
+function showAge(date, inputText) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -203,8 +203,7 @@ function showAge(date) {
   const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   const event = EVENTS[dateKey];
   if (event) {
-    const eventDate = new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-    html += `<div class="on-this-date"><span class="emoji">${event.emoji}</span> ${event.text}<div class="on-this-date-date">${eventDate}</div></div>`;
+    html += `<div class="on-this-date"><span class="emoji">${event.emoji}</span> ${event.text}<div class="on-this-date-date">${inputText}</div></div>`;
   }
 
   result.innerHTML = html;
