@@ -85,22 +85,30 @@ function isPast(date) {
 
 birthdate.focus();
 
-// Auto-fill from page selection when popup opens
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  if (!tabs[0]?.id) return;
-  chrome.scripting.executeScript({
-    target: { tabId: tabs[0].id },
-    func: () => window.getSelection().toString(),
-  }, (results) => {
-    if (chrome.runtime.lastError) return;
-    const selection = results?.[0]?.result?.trim();
-    if (selection) {
-      const parsed = chrono.parseDate(selection);
-      if (parsed && hasYear(selection) && isPast(parsed)) {
-        birthdate.value = selection;
-        birthdate.dispatchEvent(new Event("input"));
+// Auto-fill from context menu (storage fallback) or page selection
+chrome.storage.local.get("contextMenuDate", ({ contextMenuDate }) => {
+  if (contextMenuDate) {
+    chrome.storage.local.remove("contextMenuDate");
+    birthdate.value = contextMenuDate;
+    validateAndShow(contextMenuDate);
+    return;
+  }
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (!tabs[0]?.id) return;
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      func: () => window.getSelection().toString(),
+    }, (results) => {
+      if (chrome.runtime.lastError) return;
+      const selection = results?.[0]?.result?.trim();
+      if (selection) {
+        const parsed = chrono.parseDate(selection);
+        if (parsed && hasYear(selection) && isPast(parsed)) {
+          birthdate.value = selection;
+          showAge(parsed, selection);
+        }
       }
-    }
+    });
   });
 });
 
@@ -128,15 +136,10 @@ birthdate.addEventListener("input", () => {
   }
 });
 
-birthdate.addEventListener("keydown", (e) => {
-  if (e.key !== "Enter") return;
-
-  const val = birthdate.value.trim();
-  if (!val) return;
-
+function validateAndShow(val) {
   const parsed = chrono.parseDate(val);
   if (!parsed || !hasYear(val)) {
-    result.textContent = "Please include a year, e.g. \"Mar 6 1990\" or \"3/6/90\".";
+    result.textContent = "Please include a year, e.g. \"Mar 28 1986\" or \"3/28/86\".";
     result.className = "error";
   } else if (!isPast(parsed)) {
     result.textContent = "That date is in the future!";
@@ -144,6 +147,13 @@ birthdate.addEventListener("keydown", (e) => {
   } else {
     showAge(parsed, val);
   }
+}
+
+birthdate.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter") return;
+  const val = birthdate.value.trim();
+  if (!val) return;
+  validateAndShow(val);
 });
 
 document.addEventListener("keydown", (e) => {
