@@ -24,6 +24,7 @@
       --copy-btn-bg: #9FE0DD;
       --toggle-off: #d4cdc8;
       --placeholder: #948c84;
+      --divider: #ede8e3;
     }
 
     body.dark {
@@ -38,6 +39,7 @@
       --copy-btn-bg: #4a9e9b;
       --toggle-off: #5a4e48;
       --placeholder: #9a9088;
+      --divider: #4a3e35;
     }
 
     * {
@@ -47,13 +49,15 @@
     }
 
     body {
-      position: relative;
       width: 280px;
       font-family: "Red Hat Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
+    }
+
+    .main-page {
       padding: 23px 20px 30px;
-      overflow: hidden;
+      position: relative;
     }
 
     h1 {
@@ -212,10 +216,9 @@
     }
 
     .footer {
-      position: fixed;
+      position: absolute;
       bottom: 6px;
       left: 8px;
-      padding-top: 20px;
       font-size: 10px;
       color: var(--text-faintest);
     }
@@ -243,55 +246,40 @@
       transition: color 0.15s;
     }
 
-    .settings-btn:hover {
+    .settings-btn:hover,
+    .settings-btn.active {
       color: var(--text-muted);
     }
+
+    .settings-btn .close-icon {
+      display: none;
+      line-height: 0;
+      position: relative;
+      top: 3px;
+    }
+
+    .settings-btn.active .gear-icon { display: none; }
+    .settings-btn.active .close-icon { display: block; }
 
     /* Settings panel */
 
     .settings-panel {
-      position: absolute;
-      inset: 0;
-      background: var(--bg);
-      transform: translateX(100%);
-      transition: transform 0.2s ease;
-      padding: 10px 26px 30px;
-    }
-
-    .settings-panel.open {
-      transform: translateX(0);
-    }
-
-    .settings-header {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      margin-bottom: 20px;
-      margin-left: -23px;
-    }
-
-    .settings-back-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      padding-bottom: 5px;
-      color: var(--text-muted);
-      line-height: 0;
-      border-radius: 4px;
-      transition: color 0.15s;
-    }
-
-    .settings-back-btn:hover {
-      color: var(--text);
+      display: none;
+      border-top: 1px solid var(--divider);
+      padding: 20px 20px 20px;
     }
 
     .settings-title {
       font-family: "Mackinac", serif;
       font-size: 17px;
       color: var(--text);
-      position: relative;
-      top: 1px;
+      margin-top: -6px;
+      margin-left: -8px;
+      margin-bottom: 18px;
+    }
+
+    .settings-panel.open {
+      display: block;
     }
 
     .settings-row {
@@ -299,6 +287,45 @@
       align-items: center;
       justify-content: space-between;
     }
+
+    .settings-row + .settings-row {
+      margin-top: 18px;
+    }
+
+    .size-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .size-btn {
+      font-family: inherit;
+      font-weight: 400;
+      border: 1px solid var(--text-faintest);
+      border-radius: 8px;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
+      transition: border-color 0.15s, border-width 0.15s;
+    }
+
+    .size-btn.selected {
+      border: 2px solid var(--border);
+    }
+
+    .size-btn.small { font-size: 12px; }
+    .size-btn.large { font-size: 16px; }
+
+    body.large label { font-size: 14px; }
+    body.large input[type="text"] { font-size: 15px; }
+    body.large .age-rows .age { font-size: 36px; }
+    body.large .age-rows .age.word { font-size: 18px; }
 
     .settings-label {
       font-size: 14px;
@@ -350,35 +377,40 @@
   </style>
 </head>
 <body>
-  <button class="settings-btn" id="settings-btn" title="Settings">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="3.5"/>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-    </svg>
-  </button>
-  <h1>Age Today</h1>
-  <div class="input-row">
-    <label for="birthdate">DOB</label>
-    <input type="text" id="birthdate" placeholder="e.g. Mar 28 1986 or 3/28/86">
+  <div class="main-page">
+    <button class="settings-btn" id="settings-btn" title="Settings">
+      <svg class="gear-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3.5"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      <svg class="close-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+    <h1>Age Today</h1>
+    <div class="input-row">
+      <label for="birthdate">DOB</label>
+      <input type="text" id="birthdate" placeholder="e.g. Mar 28 1986 or 3/28/86">
+    </div>
+    <div id="result"></div>
+    <div class="footer">Made for <a href="https://advocatesforchildren.org/donate/" target="_blank">AFC</a> &lt;3</div>
   </div>
-  <div id="result"></div>
-  <div class="footer">Made for <a href="https://advocatesforchildren.org/donate/" target="_blank">AFC</a> &lt;3</div>
 
   <div class="settings-panel" id="settings-panel">
-    <div class="settings-header">
-      <button class="settings-back-btn" id="settings-back-btn" title="Back">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
-      </button>
-      <span class="settings-title">Settings</span>
-    </div>
+    <div class="settings-title">Settings</div>
     <div class="settings-row">
       <span class="settings-label">Dark mode</span>
       <label class="toggle">
         <input type="checkbox" id="dark-mode-toggle">
         <span class="toggle-slider"></span>
       </label>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Text size</span>
+      <div class="size-btns">
+        <button class="size-btn small" id="size-normal" type="button">Aa</button>
+        <button class="size-btn large" id="size-large" type="button">Aa</button>
+      </div>
     </div>
   </div>
 

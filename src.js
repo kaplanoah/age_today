@@ -4,7 +4,6 @@ import confetti from "canvas-confetti";
 // Settings panel
 const settingsBtn = document.getElementById("settings-btn");
 const settingsPanel = document.getElementById("settings-panel");
-const settingsBackBtn = document.getElementById("settings-back-btn");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 
 chrome.storage.sync.get("darkMode", ({ darkMode }) => {
@@ -14,12 +13,46 @@ chrome.storage.sync.get("darkMode", ({ darkMode }) => {
   }
 });
 
-settingsBtn.addEventListener("click", () => settingsPanel.classList.add("open"));
-settingsBackBtn.addEventListener("click", () => settingsPanel.classList.remove("open"));
+function closeSettings() {
+  settingsPanel.classList.remove("open");
+  settingsBtn.classList.remove("active");
+}
+
+settingsBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isOpen = settingsPanel.classList.toggle("open");
+  settingsBtn.classList.toggle("active", isOpen);
+});
+
+document.querySelector(".main-page").addEventListener("click", () => {
+  if (settingsPanel.classList.contains("open")) closeSettings();
+});
 darkModeToggle.addEventListener("change", () => {
   const isDark = darkModeToggle.checked;
   document.body.classList.toggle("dark", isDark);
   chrome.storage.sync.set({ darkMode: isDark });
+});
+
+const sizeNormalBtn = document.getElementById("size-normal");
+const sizeLargeBtn = document.getElementById("size-large");
+
+function applyTextSize(size) {
+  document.body.classList.toggle("large", size === "large");
+  sizeNormalBtn.classList.toggle("selected", size !== "large");
+  sizeLargeBtn.classList.toggle("selected", size === "large");
+}
+
+chrome.storage.sync.get("textSize", ({ textSize }) => {
+  applyTextSize(textSize || "normal");
+});
+
+sizeNormalBtn.addEventListener("click", () => {
+  applyTextSize("normal");
+  chrome.storage.sync.set({ textSize: "normal" });
+});
+sizeLargeBtn.addEventListener("click", () => {
+  applyTextSize("large");
+  chrome.storage.sync.set({ textSize: "large" });
 });
 
 const birthdate = document.getElementById("birthdate");
