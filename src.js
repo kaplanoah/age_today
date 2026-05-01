@@ -1,6 +1,27 @@
 import * as chrono from "chrono-node";
 import confetti from "canvas-confetti";
 
+// Settings panel
+const settingsBtn = document.getElementById("settings-btn");
+const settingsPanel = document.getElementById("settings-panel");
+const settingsBackBtn = document.getElementById("settings-back-btn");
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+
+chrome.storage.sync.get("darkMode", ({ darkMode }) => {
+  if (darkMode) {
+    document.body.classList.add("dark");
+    darkModeToggle.checked = true;
+  }
+});
+
+settingsBtn.addEventListener("click", () => settingsPanel.classList.add("open"));
+settingsBackBtn.addEventListener("click", () => settingsPanel.classList.remove("open"));
+darkModeToggle.addEventListener("change", () => {
+  const isDark = darkModeToggle.checked;
+  document.body.classList.toggle("dark", isDark);
+  chrome.storage.sync.set({ darkMode: isDark });
+});
+
 const birthdate = document.getElementById("birthdate");
 const result = document.getElementById("result");
 const isMac = navigator.platform.toUpperCase().includes("MAC");

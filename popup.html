@@ -12,6 +12,34 @@
       font-style: normal;
     }
 
+    :root {
+      --bg: #FFFFFF;
+      --input-bg: #FFFFFF;
+      --text: #3A322B;
+      --text-muted: #6b6158;
+      --text-faint: #9b9189;
+      --text-faintest: #b0a99f;
+      --text-faintest-hover: #8a8279;
+      --border: #FEC654;
+      --copy-btn-bg: #9FE0DD;
+      --toggle-off: #d4cdc8;
+      --placeholder: #948c84;
+    }
+
+    body.dark {
+      --bg: #3A322B;
+      --input-bg: #4a3e35;
+      --text: #FFFFFF;
+      --text-muted: #d4cdc8;
+      --text-faint: #a09488;
+      --text-faintest: #706860;
+      --text-faintest-hover: #a09488;
+      --border: #FEC654;
+      --copy-btn-bg: #4a9e9b;
+      --toggle-off: #5a4e48;
+      --placeholder: #9a9088;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -19,11 +47,13 @@
     }
 
     body {
+      position: relative;
       width: 280px;
       font-family: "Red Hat Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #FFFFFF;
-      color: #3A322B;
+      background: var(--bg);
+      color: var(--text);
       padding: 23px 20px 30px;
+      overflow: hidden;
     }
 
     h1 {
@@ -43,7 +73,7 @@
     label {
       font-size: 13px;
       font-weight: 500;
-      color: #3A322B;
+      color: var(--text);
       white-space: nowrap;
     }
 
@@ -51,24 +81,24 @@
       flex: 1;
       padding: 8px 10px;
       font-size: 14px;
-      border: 1px solid #FEC654;
+      border: 1px solid var(--border);
       border-radius: 6px;
       outline: none;
-      background: #FFFFFF;
-      color: #3A322B;
+      background: var(--input-bg);
+      color: var(--text);
       transition: border-color 0.2s;
     }
 
     input[type="text"]:focus {
-      border-color: #FEC654;
+      border-color: var(--border);
     }
 
     input[type="text"]::placeholder {
-      color: #b0a99f;
+      color: var(--placeholder);
     }
 
     #result {
-      color: #3A322B;
+      color: var(--text);
     }
 
     #result:empty {
@@ -98,7 +128,7 @@
     .age-rows .age {
       font-size: 32px;
       font-weight: 700;
-      color: #3A322B;
+      color: var(--text);
       text-align: center;
       line-height: 1;
     }
@@ -129,8 +159,8 @@
       padding: 5px 6px 4px 5px;
       border: none;
       border-radius: 5px;
-      background: #9FE0DD;
-      color: #3A322B;
+      background: var(--copy-btn-bg);
+      color: var(--text);
       cursor: pointer;
       white-space: nowrap;
       transition: opacity 0.15s;
@@ -161,7 +191,7 @@
       margin-bottom: -6px;
       text-align: center;
       font-size: 12px;
-      color: #6b6158;
+      color: var(--text-muted);
       font-weight: 500;
       line-height: 1.3;
       text-wrap: balance;
@@ -178,7 +208,7 @@
       margin-top: 4px;
       font-size: 11px;
       font-weight: 300;
-      color: #9b9189;
+      color: var(--text-faint);
     }
 
     .footer {
@@ -187,20 +217,145 @@
       left: 8px;
       padding-top: 20px;
       font-size: 10px;
-      color: #b0a99f;
+      color: var(--text-faintest);
     }
 
     .footer a {
-      color: #b0a99f;
+      color: var(--text-faintest);
       text-decoration: underline;
     }
 
     .footer a:hover {
-      color: #8a8279;
+      color: var(--text-faintest-hover);
+    }
+
+    .settings-btn {
+      position: absolute;
+      bottom: 3px;
+      right: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text-faintest);
+      line-height: 0;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .settings-btn:hover {
+      color: var(--text-muted);
+    }
+
+    /* Settings panel */
+
+    .settings-panel {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      transform: translateX(100%);
+      transition: transform 0.2s ease;
+      padding: 10px 26px 30px;
+    }
+
+    .settings-panel.open {
+      transform: translateX(0);
+    }
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 20px;
+      margin-left: -23px;
+    }
+
+    .settings-back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      padding-bottom: 5px;
+      color: var(--text-muted);
+      line-height: 0;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .settings-back-btn:hover {
+      color: var(--text);
+    }
+
+    .settings-title {
+      font-family: "Mackinac", serif;
+      font-size: 17px;
+      color: var(--text);
+      position: relative;
+      top: 1px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .settings-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--toggle-off);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-slider::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: var(--border);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(16px);
     }
   </style>
 </head>
 <body>
+  <button class="settings-btn" id="settings-btn" title="Settings">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3.5"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </button>
   <h1>Age Today</h1>
   <div class="input-row">
     <label for="birthdate">DOB</label>
@@ -208,6 +363,25 @@
   </div>
   <div id="result"></div>
   <div class="footer">Made for <a href="https://advocatesforchildren.org/donate/" target="_blank">AFC</a> &lt;3</div>
+
+  <div class="settings-panel" id="settings-panel">
+    <div class="settings-header">
+      <button class="settings-back-btn" id="settings-back-btn" title="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="settings-title">Settings</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Dark mode</span>
+      <label class="toggle">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>
