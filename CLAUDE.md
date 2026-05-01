@@ -2,11 +2,13 @@
 
 ## Building the zip for Chrome Web Store
 
-When asked to create a zip for the Chrome Web Store, run:
+When asked to create a zip for the Chrome Web Store, first read the version from `manifest.json`, then run:
 
 ```
-rm -f age_today.zip && zip -r age_today.zip manifest.json popup.html popup.js background.js icons/
+rm -f age_today_v<VERSION>.zip && zip -r age_today_v<VERSION>.zip manifest.json popup.html popup.js background.js icons/
 ```
+
+For example, if the version is `1.2`: `age_today_v1.2.zip`
 
 Only these files belong in the zip:
 - `manifest.json`
