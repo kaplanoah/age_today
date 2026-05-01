@@ -40,6 +40,7 @@ function applyTextSize(size) {
   document.body.classList.toggle("large", size === "large");
   sizeNormalBtn.classList.toggle("selected", size !== "large");
   sizeLargeBtn.classList.toggle("selected", size === "large");
+  birthdate.placeholder = size === "large" ? "e.g. Mar 28 1986" : "e.g. Mar 28 1986 or 3/28/86";
 }
 
 chrome.storage.sync.get("textSize", ({ textSize }) => {
