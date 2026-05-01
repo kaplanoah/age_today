@@ -5,7 +5,7 @@
 When asked to create a zip for the Chrome Web Store, first read the version from `manifest.json`, then run:
 
 ```
-rm -f age_today_v<VERSION>.zip && zip -r age_today_v<VERSION>.zip manifest.json popup.html popup.js background.js icons/
+rm -f age_today_v<VERSION>.zip && zip -r age_today_v<VERSION>.zip manifest.json popup.html popup.js background.js icons/ fonts/
 ```
 
 For example, if the version is `1.2`: `age_today_v1.2.zip`
@@ -16,6 +16,7 @@ Only these files belong in the zip:
 - `popup.js` (bundled output)
 - `background.js` (service worker, not bundled)
 - `icons/`
+- `fonts/`
 
 Do NOT include `src.js`, `node_modules/`, `package.json`, or any other dev/repo files.
 
