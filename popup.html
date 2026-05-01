@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;500;600;700&family=Red+Hat+Text:wght@400;500;600;700&display=swap">
   <style>
     @font-face {
       font-family: "Mackinac";
@@ -335,6 +335,9 @@
     body.large .on-this-date-date { font-size: 13px; }
     body.large .settings-title { font-size: 20px; }
     body.large .settings-label { font-size: 16px; }
+    body.large .font-section-title { font-size: 16px; }
+    body.large .font-card-title { font-size: 15px; }
+    body.large .font-card-desc { font-size: 13px; }
     body.large .footer { font-size: 12px; }
 
     .settings-label {
@@ -343,46 +346,109 @@
       color: var(--text);
     }
 
-    .toggle {
-      position: relative;
-      width: 36px;
-      height: 20px;
-      flex-shrink: 0;
+    .appearance-toggle {
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    .toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
-      inset: 0;
-      background: var(--toggle-off);
-      border-radius: 20px;
+    .appearance-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
       cursor: pointer;
-      transition: background 0.2s;
+      padding: 6px 13px;
+      line-height: 1;
+      transition: box-shadow 0.15s;
     }
 
-    .toggle-slider::before {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      left: 3px;
-      top: 3px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.2s;
+    .appearance-btn[data-mode="light"] {
+      background: #FFFFFF;
+      color: #3A322B;
     }
 
-    .toggle input:checked + .toggle-slider {
-      background: var(--border);
+    .appearance-btn[data-mode="dark"] {
+      background: #3A322B;
+      color: #FFFFFF;
     }
 
-    .toggle input:checked + .toggle-slider::before {
-      transform: translateX(16px);
+    .appearance-btn.selected {
+      background: #FEC654;
+      color: #3A322B;
+    }
+
+    body.large .appearance-btn { font-size: 14px; }
+
+    body.font-lexend {
+      font-family: "Lexend", sans-serif;
+    }
+
+    body.font-lexend h1,
+    body.font-lexend .settings-title {
+      font-family: "Lexend", sans-serif;
+    }
+
+    body.font-atkinson {
+      font-family: "Atkinson Hyperlegible", sans-serif;
+    }
+
+    body.font-atkinson h1,
+    body.font-atkinson .settings-title {
+      font-family: "Atkinson Hyperlegible", sans-serif;
+    }
+
+    .font-section {
+      margin-top: 18px;
+    }
+
+    .font-section-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .font-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .font-card {
+      border: 1px solid var(--text-faintest);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      background: none;
+      text-align: left;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+
+    .font-card.selected {
+      border: 2px solid var(--border);
+    }
+
+    .font-card[data-font="default"] { font-family: "Red Hat Text", sans-serif; padding-top: 13px; }
+    .font-card[data-font="lexend"] { font-family: "Lexend", sans-serif; padding-top: 9px; }
+    .font-card[data-font="atkinson"] { font-family: "Atkinson Hyperlegible", sans-serif; }
+
+    .font-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .font-card[data-font="default"] .font-card-title {
+      font-family: "Mackinac", serif;
+    }
+
+    .font-card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -409,17 +475,34 @@
   <div class="settings-panel" id="settings-panel">
     <div class="settings-title">Settings</div>
     <div class="settings-row">
-      <span class="settings-label">Dark mode</span>
-      <label class="toggle">
-        <input type="checkbox" id="dark-mode-toggle">
-        <span class="toggle-slider"></span>
-      </label>
+      <span class="settings-label">Appearance</span>
+      <div class="appearance-toggle">
+        <button class="appearance-btn" id="appearance-light" data-mode="light" type="button">Light</button>
+        <button class="appearance-btn" id="appearance-dark" data-mode="dark" type="button">Dark</button>
+      </div>
     </div>
     <div class="settings-row">
       <span class="settings-label">Text size</span>
       <div class="size-btns">
         <button class="size-btn small" id="size-normal" type="button">Aa</button>
         <button class="size-btn large" id="size-large" type="button">Aa</button>
+      </div>
+    </div>
+    <div class="font-section">
+      <div class="font-section-title">Font</div>
+      <div class="font-cards">
+        <button class="font-card" data-font="default" type="button">
+          <div class="font-card-title">Mackinac & Red Hat Text</div>
+          <div class="font-card-desc">A literary serif with crisp wedges, and a warm geometric sans built for screens.</div>
+        </button>
+        <button class="font-card" data-font="lexend" type="button">
+          <div class="font-card-title">Lexend</div>
+          <div class="font-card-desc">Designed by educational therapist Dr. Bonnie Shaver-Troup to help with reading fluency.</div>
+        </button>
+        <button class="font-card" data-font="atkinson" type="button">
+          <div class="font-card-title">Atkinson Hyperlegible</div>
+          <div class="font-card-desc">Designed for the Braille Institute for low-vision readers, with characters shaped to be distinct.</div>
+        </button>
       </div>
     </div>
   </div>

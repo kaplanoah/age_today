@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Age Today",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Get the current age for a date of birth",
   "action": {
     "default_popup": "popup.html",

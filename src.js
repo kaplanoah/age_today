@@ -4,13 +4,25 @@ import confetti from "canvas-confetti";
 // Settings panel
 const settingsBtn = document.getElementById("settings-btn");
 const settingsPanel = document.getElementById("settings-panel");
-const darkModeToggle = document.getElementById("dark-mode-toggle");
+const appearanceLightBtn = document.getElementById("appearance-light");
+const appearanceDarkBtn = document.getElementById("appearance-dark");
 
-chrome.storage.sync.get("darkMode", ({ darkMode }) => {
-  if (darkMode) {
-    document.body.classList.add("dark");
-    darkModeToggle.checked = true;
-  }
+function applyAppearance(mode) {
+  document.body.classList.toggle("dark", mode === "dark");
+  appearanceLightBtn.classList.toggle("selected", mode === "light");
+  appearanceDarkBtn.classList.toggle("selected", mode === "dark");
+}
+
+chrome.storage.sync.get("darkMode", ({ darkMode }) => applyAppearance(darkMode ? "dark" : "light"));
+
+appearanceLightBtn.addEventListener("click", () => {
+  applyAppearance("light");
+  chrome.storage.sync.set({ darkMode: false });
+});
+
+appearanceDarkBtn.addEventListener("click", () => {
+  applyAppearance("dark");
+  chrome.storage.sync.set({ darkMode: true });
 });
 
 function closeSettings() {
@@ -27,14 +39,26 @@ settingsBtn.addEventListener("click", (e) => {
 document.querySelector(".main-page").addEventListener("click", () => {
   if (settingsPanel.classList.contains("open")) closeSettings();
 });
-darkModeToggle.addEventListener("change", () => {
-  const isDark = darkModeToggle.checked;
-  document.body.classList.toggle("dark", isDark);
-  chrome.storage.sync.set({ darkMode: isDark });
-});
 
 const sizeNormalBtn = document.getElementById("size-normal");
 const sizeLargeBtn = document.getElementById("size-large");
+const fontCards = document.querySelectorAll(".font-card");
+
+function applyFont(font) {
+  document.body.classList.remove("font-lexend", "font-atkinson");
+  if (font === "lexend") document.body.classList.add("font-lexend");
+  if (font === "atkinson") document.body.classList.add("font-atkinson");
+  fontCards.forEach(card => card.classList.toggle("selected", card.dataset.font === font));
+}
+
+chrome.storage.sync.get("font", ({ font }) => applyFont(font || "default"));
+
+fontCards.forEach(card => {
+  card.addEventListener("click", () => {
+    applyFont(card.dataset.font);
+    chrome.storage.sync.set({ font: card.dataset.font });
+  });
+});
 
 function applyTextSize(size) {
   document.body.classList.toggle("large", size === "large");
