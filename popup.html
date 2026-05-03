@@ -22,7 +22,6 @@
       --text-faintest-hover: #8a8279;
       --border: #FEC654;
       --copy-btn-bg: #9FE0DD;
-      --toggle-off: #d4cdc8;
       --placeholder: #948c84;
       --divider: #ede8e3;
     }
@@ -33,11 +32,9 @@
       --text: #FFFFFF;
       --text-muted: #d4cdc8;
       --text-faint: #a09488;
-      --text-faintest: #706860;
+      --text-faintest: #8a7e76;
       --text-faintest-hover: #a09488;
       --border: #FEC654;
-      --copy-btn-bg: #4a9e9b;
-      --toggle-off: #5a4e48;
       --placeholder: #9a9088;
       --divider: #4a3e35;
     }
@@ -164,14 +161,14 @@
       border: none;
       border-radius: 5px;
       background: var(--copy-btn-bg);
-      color: var(--text);
+      color: #222323;
       cursor: pointer;
       white-space: nowrap;
       transition: opacity 0.15s;
       display: flex;
       align-items: center;
       gap: 7px;
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
     .copy-btn .shortcut {
@@ -179,7 +176,11 @@
     }
 
     .copy-btn:hover {
-      opacity: 0.8;
+      opacity: 0.7;
+    }
+
+    body.dark .copy-btn:hover {
+      opacity: 0.9;
     }
 
     .copy-btn svg {
@@ -365,7 +366,7 @@
 
     .appearance-btn[data-mode="light"] {
       background: #FFFFFF;
-      color: #3A322B;
+      color: #222323;
     }
 
     .appearance-btn[data-mode="dark"] {
@@ -375,7 +376,7 @@
 
     .appearance-btn.selected {
       background: #FEC654;
-      color: #3A322B;
+      color: #222323;
     }
 
     body.large .appearance-btn { font-size: 14px; }
