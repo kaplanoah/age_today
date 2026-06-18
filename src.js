@@ -146,6 +146,21 @@ const EVENTS = {
   "2020-05-19": { emoji: "⚖️", text: "AFC secured a resolution agreement requiring NYC DOE to provide translation and interpretation services in special education proceedings" },
   "2022-09-08": { emoji: "🗽", text: "Governor Hochul signed New York City's landmark class size law, the first binding class size mandate in city history" },
   "2023-02-03": { emoji: "⚖️", text: "The Second Circuit reversed a lower court and allowed AFC's Z.Q. class action to proceed, ruling that NYC students with disabilities could pursue claims for make-up services lost during COVID remote learning" },
+  "2010-07-08": { emoji: "🏀", text: "Amar'e Stoudemire's sign-and-trade with the Knicks made official" },
+  "2011-02-22": { emoji: "🏀", text: "Carmelo Anthony traded to the Knicks" },
+  "2012-02-04": { emoji: "🏀", text: "Linsanity begins as Jeremy Lin scores 25 against the Nets" },
+  "2012-02-10": { emoji: "🏀", text: "Linsanity peaks as Jeremy Lin scores 38 against Kobe and the Lakers" },
+  "2014-01-24": { emoji: "🏀", text: "Carmelo Anthony scores 62 at MSG, a Knicks and Garden single-game record" },
+  "2020-03-02": { emoji: "🏀", text: "Leon Rose named Knicks team president, taking over basketball operations" },
+  "2022-07-12": { emoji: "🏀", text: "Jalen Brunson signs with the Knicks" },
+  "2023-12-30": { emoji: "🏀", text: "Knicks acquire OG Anunoby from Toronto for RJ Barrett, Immanuel Quickley and a 2024 second-round pick" },
+  "2024-07-06": { emoji: "🏀", text: "Mikal Bridges trade from Brooklyn to the Knicks made official" },
+  "2024-07-12": { emoji: "🏀", text: "Jalen Brunson agrees to a 4-year, $156.5M extension, leaving over $100M on the table to give the Knicks future cap flexibility" },
+  "2024-09-27": { emoji: "🏀", text: "Knicks acquire Karl-Anthony Towns from Minnesota for Julius Randle, Donte DiVincenzo and a first-round pick" },
+  "2025-07-07": { emoji: "🏀", text: "Knicks name Mike Brown head coach" },
+  "2026-05-25": { emoji: "🏀", text: "Knicks shellac the Cavaliers 130–93 to complete a 4–0 sweep in the East finals and reach the NBA Finals for the first time since 1999" },
+  "2026-06-10": { emoji: "🏀", text: "OG Anunoby's last-second tip-in caps a 29-point comeback in Game 4 of the Finals, giving the Knicks a 107–106 win over the Spurs and a 3–1 series lead" },
+  "2026-06-13": { emoji: "🏀", text: "Jalen Brunson drops 45 and the Knicks beat the Spurs to win the NBA Championship" },
 };
 let confettiTimeout = null;
 let confettiFired = false;
