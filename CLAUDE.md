@@ -1,5 +1,19 @@
 # Age Today - Chrome Extension
 
+## Adding events
+
+Events live in the `EVENTS` object in `src.js`, keyed by date (`"YYYY-MM-DD"`). After adding events, check that no date key is duplicated (a duplicate key silently overwrites the earlier event):
+
+```
+grep -oE '^  "[0-9]{4}-[0-9]{2}-[0-9]{2}"' src.js | sort | uniq -d
+```
+
+Any output means there is a collision to resolve.
+
+## Version bumping
+
+The Chrome Web Store rejects re-uploads with a version that was already published. Before creating a zip to publish, if the `version` in `manifest.json` has not already been bumped for the current set of changes, ask the user whether to bump it.
+
 ## Building the zip for Chrome Web Store
 
 When asked to create a zip for the Chrome Web Store, first read the version from `manifest.json`, then run:
